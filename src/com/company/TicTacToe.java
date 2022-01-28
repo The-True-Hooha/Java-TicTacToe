@@ -44,28 +44,79 @@ public class TicTacToe implements ActionListener {
         buttonPanel.setLayout(new GridLayout());
         buttonPanel.setBackground(new Color(150, 150, 150));
 
+        //a for loop that iterates through the button
+        for (int i = 0; i < 9; i++) {
+            buttons[i] = new JButton();
+            buttonPanel.add(buttons[i]);
+            buttons[i].setFont(new Font("MV BOLI", Font.BOLD, 120));
+            buttons[i].setFocusable(false);
+            buttons[i].addActionListener(this);
+        }
 
         //adds to the frame calling from the JFrame function
         frame.add(titlePanel, BorderLayout.NORTH);
         frame.add(buttonPanel);
 
-
-
+        //calling the firsTurn method
+        firstTurn();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        for (int i = 0; i < 9; i++) {
+            if (e.getSource() == buttons[i]) {
+                if (player1Turn) {
+                    if (buttons[i].getText() == "") {
+                        buttons[i].setForeground(new Color(255, 0, 0));
+                        buttons[i].setText("X");
+                        player1Turn = false;
+                        textField.setText("O turn");
+                        checkResult();
+                    }
+                }
+                else {
+                    if (buttons[i].getText() == "") {
+                        buttons[i].setForeground(new Color(0x1313A9));
+                        buttons[i].setText("O");
+                        player1Turn = true;
+                        textField.setText("X turn");
+                        checkResult();
+                    }
+                }
+            }
+
+        }
     }
 
     //a new method that tells who turn it is to play
-
     public void firstTurn () {
 
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (random.nextInt(2) ==0 ) {
+            player1Turn = true;
+            textField.setText("X Turn");
+        } else {
+            player1Turn = false;
+            textField.setText("O Turn");
+        }
     }
 
     //method to see if anyone has won
-    public void CheckResult () {
+    public void checkResult () {
+        //check to see if X wins
+        if (
+                (buttons[0].getText() == "X") &&
+                        (buttons[1].getText() == "X") &&
+                        (buttons[2]).getText() == "X" &&
+                        (buttons[3]).getText() == "X"
+                        ) {
+            xWins(0, 1, 2);
+        }
 
     }
 
